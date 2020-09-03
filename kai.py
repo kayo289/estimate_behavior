@@ -16,7 +16,7 @@ def init():
     filename = ["fukushima","houjin","neishi","oikawa","ueda"]
     often_laugh = [0,1,1,1,0]
     knowledge = [0,1,1,1,1]
-    list_df = pd.DataFrame(columns=["name", "time", "joy", "interested", "often_laugh", "knowledge"])
+    list_df = pd.DataFrame(columns=["name","time", "joy", "interested", "often_laugh", "knowledge"])
 
     for index, item in enumerate(filename):
         # for name in range(5):
