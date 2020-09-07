@@ -29,7 +29,7 @@ train = init()
 if level == 2:
     drop_index = train.index[((train["often_laugh"]==1) & (train["joy"] <= 2)) | ((train["often_laugh"]==0) & (train["joy"] <= 3))]
     train = train.drop(drop_index)
-print(type(train))
+# print(type(train))
 #データセットをテスト用と訓練用に分ける
 x_train, x_test, y_train, y_test = train_test_split(
     train.loc[:, ['time', 'knowledge','often_laugh']].values,
@@ -72,7 +72,7 @@ if (level == 2):
             else:
                 predict[i] = 0
 # 変化がないのになぜ、入れなきゃエラーが出るの？
-# print(y_test)
+print(y_test.dtype)
 y_test=y_test.astype('int')
-# print(y_test)
+print(y_test.dtype)
 print( "正解率:{:.2f}%".format(accuracy_score(y_test, predict) * 100 ))

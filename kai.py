@@ -1,6 +1,5 @@
 import io
 import os
-# Imports the Google Cloud client library
 from google.cloud import vision
 from google.cloud.vision import types
 import pandas as pd
@@ -12,22 +11,22 @@ import pandas as pd
 # knowledge 1, ない   0
 # time,joy,interested,often_laugh,knowledgeの形に
 
+def readfiles(filename):
+    with open('data/{}.txt'.format(filename)) as f:
+        interested = f.readlines()
+        interested = [int(s.strip()) for s in interested]
+    return interested
+
 def init():
     filename = ["fukushima","houjin","neishi","oikawa","ueda"]
     often_laugh = [0,1,1,1,0]
     knowledge = [0,1,1,1,1]
     list_df = pd.DataFrame(columns=["name","time", "joy", "interested", "often_laugh", "knowledge"])
-
     for index, item in enumerate(filename):
-        # for name in range(5):
-        with open('data/{}.txt'.format(item)) as f:
-            interested = f.readlines()
-            interested = [int(s.strip()) for s in interested]
+        interested = readfiles(item)
         for i in range(10):
             # Instantiates a client
             client = vision.ImageAnnotatorClient()
-            likelihood_name = ('UNKNOWN', 'VERY_UNLIKELY', 'UNLIKELY', 'POSSIBLE',
-                            'LIKELY', 'VERY_LIKELY')
             # The name of the image file to annotate
             file_name = os.path.abspath('{}_img/{}.png'.format(item, str(i)))
             # Loads the image into memory
@@ -38,7 +37,9 @@ def init():
             response = client.face_detection(image=image)
             faces = response.face_annotations
             for face in faces:
-                # print('{}.png: {}'.format(str(i),face.joy_likelihood))
                 tmp = pd.Series([item, i, face.joy_likelihood, interested[i], often_laugh[index], knowledge[index]], index=list_df.columns)
                 list_df = list_df.append(tmp,ignore_index=True)
+    print(list_df.dtypes)
     return(list_df)
+
+# ファイル読み込み部分の関数化
