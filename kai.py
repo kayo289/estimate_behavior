@@ -12,19 +12,24 @@ import pandas as pd
 # time,joy,interested,often_laugh,knowledgeの形に
 
 def readfiles(filename):
-    with open('data/{}.txt'.format(filename)) as f:
-        interested = f.readlines()
-        interested = [int(s.strip()) for s in interested]
-    return interested
+    ary = []
+    for item in filename:
+        interested = []
+        with open('data/{}.txt'.format(item)) as f:
+            interested = f.readlines()
+            interested = [int(s.strip()) for s in interested]
+        ary += interested
+    return ary
 
 def init():
     filename = ["fukushima","houjin","neishi","oikawa","ueda"]
     often_laugh = [0,1,1,1,0]
     knowledge = [0,1,1,1,1]
     list_df = pd.DataFrame(columns=["name","time", "joy", "interested", "often_laugh", "knowledge"])
+    n = 10
+    interested = readfiles(filename)
     for index, item in enumerate(filename):
-        interested = readfiles(item)
-        for i in range(10):
+        for i in range(n):
             # Instantiates a client
             client = vision.ImageAnnotatorClient()
             # The name of the image file to annotate
@@ -37,7 +42,7 @@ def init():
             response = client.face_detection(image=image)
             faces = response.face_annotations
             for face in faces:
-                tmp = pd.Series([item, i, face.joy_likelihood, interested[i], often_laugh[index], knowledge[index]], index=list_df.columns)
+                tmp = pd.Series([item, i, face.joy_likelihood, interested[n*index + i], often_laugh[index], knowledge[index]], index=list_df.columns)
                 list_df = list_df.append(tmp,ignore_index=True)
     print(list_df.dtypes)
     return(list_df)
