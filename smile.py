@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 import pandas as pd
-from kai import init
+from kai import pleasant_estimation
 
 # joy 1~5
 # interested 1, not 0
@@ -21,7 +21,7 @@ b_level = 0.712
 level = 2
 
 # train = pd.read_csv("csv/level1.csv", sep=",") #(1)
-train = init()
+train = pleasant_estimation()
 # print(type(train))
 # print(train)
 
@@ -55,7 +55,6 @@ probs = classifier.predict_proba(x_test_std)
 predict = clf.predict(x_test_std)
 # print(predict)
 
-print(x_test)
 # ---------------abam-----------------
 if (level == 2):
     predict = [0] * len(probs)
@@ -72,7 +71,5 @@ if (level == 2):
             else:
                 predict[i] = 0
 # 変化がないのになぜ、入れなきゃエラーが出るの？
-print(y_test.dtype)
 y_test=y_test.astype('int')
-print(y_test.dtype)
 print( "正解率:{:.2f}%".format(accuracy_score(y_test, predict) * 100 ))

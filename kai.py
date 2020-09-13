@@ -3,6 +3,7 @@ import os
 from google.cloud import vision
 from google.cloud.vision import types
 import pandas as pd
+import numpy as np
 
 # ----memo----
 # joy 1~5
@@ -19,14 +20,14 @@ def readfiles(filename):
             interested = f.readlines()
             interested = [int(s.strip()) for s in interested]
         ary += interested
-    return ary
+    return np.array(ary)
 
-def init():
+def pleasant_estimation():
     filename = ["fukushima","houjin","neishi","oikawa","ueda"]
     often_laugh = [0,1,1,1,0]
     knowledge = [0,1,1,1,1]
     list_df = pd.DataFrame(columns=["name","time", "joy", "interested", "often_laugh", "knowledge"])
-    n = 10
+    n = 20
     interested = readfiles(filename)
     for index, item in enumerate(filename):
         for i in range(n):
