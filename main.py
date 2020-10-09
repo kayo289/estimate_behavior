@@ -3,12 +3,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-import io
-import os
-from google.cloud import vision
-from google.cloud.vision import types
-import pandas as pd
-import numpy as np
 import smile
 import kai
 
