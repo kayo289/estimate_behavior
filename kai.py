@@ -15,10 +15,9 @@ def readfiles(filename):
         ary += interested
     return np.array(ary)
 
-def pleasant_estimation(filename, often_laugh, knowledge, n):
+def pleasant_estimation(filename, often_laugh, knowledge, n, interested):
     list_df = pd.DataFrame(columns=["name","time", "joy", "interested", "often_laugh", "knowledge"])
     n = 20
-    interested = readfiles(filename)
     for index, item in enumerate(filename):
         for i in range(n):
             # Instantiates a client
